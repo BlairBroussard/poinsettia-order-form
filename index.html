@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Poinsettia Order Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 2em auto;
+    }
+    label, input {
+      display: block;
+      margin: 0.5em 0;
+    }
+    .form-section {
+      margin-bottom: 1.5em;
+    }
+    .total {
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    button {
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Poinsettia Order Form</h1>
+
+  <form id="orderForm">
+    <div class="form-section">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone">
+    </div>
+
+    <div class="form-section">
+      <label for="qty5">5-Inch Poinsettia ($8 each):</label>
+      <input type="number" id="qty5" min="0" value="0">
+
+      <label for="qty9">9-Inch Poinsettia ($12 each):</label>
+      <input type="number" id="qty9" min="0" value="0">
+
+      <label for="qty20">20-Inch Poinsettia ($30 each):</label>
+      <input type="number" id="qty20" min="0" value="0">
+    </div>
+
+    <div class="form-section total">
+      Total: $<span id="totalAmount">0</span>
+    </div>
+
+    <button type="button" onclick="calculateTotal()">Calculate Total</button>
+
+    <div class="form-section">
+      <p><strong>Venmo Payment:</strong></p>
+      <p>
+        Please send your total via Venmo to: <strong>@YourVenmoHandleHere</strong><br>
+        Include your name and “Poinsettia Order” in the payment note.
+      </p>
+      <a id="venmoLink" href="https://venmo.com/YourVenmoHandleHere" target="_blank">
+        Pay via Venmo
+      </a>
+    </div>
+  </form>
+
+  <script>
+    function calculateTotal() {
+      const qty5 = parseInt(document.getElementById('qty5').value) || 0;
+      const qty9 = parseInt(document.getElementById('qty9').value) || 0;
+      const qty20 = parseInt(document.getElementById('qty20').value) || 0;
+
+      const total = (qty5 * 8) + (qty9 * 12) + (qty20 * 30);
+      document.getElementById('totalAmount').textContent = total;
+
+      // Optional: update Venmo link with pre-filled amount
+      const venmoHandle = "YourVenmoHandleHere";
+      const note = encodeURIComponent("Poinsettia Order for " + document.getElementById('name').value);
+      const venmoLink = `https://venmo.com/${venmoHandle}?txn=pay&amount=${total}&note=${note}`;
+      document.getElementById('venmoLink').href = venmoLink;
+    }
+  </script>
+</body>
+</html>
